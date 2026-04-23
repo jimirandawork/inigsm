@@ -9,115 +9,215 @@
     <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
     <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
     <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
     
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;700;900&display=swap');
         body { font-family: 'Inter', sans-serif; background-color: #050505; scroll-behavior: smooth; margin: 0; }
+        .text-silver { color: #c0c0c0; }
+        .border-silver { border-color: #c0c0c0; }
     </style>
 </head>
 <body>
     <div id="root"></div>
 
     <script type="text/babel">
-        // We are putting the icons here so the browser doesn't get confused
+        // Accessing icons from the Lucide library
         const { 
           Briefcase, MessageSquare, Award, Mail, ExternalLink, Linkedin, Instagram, 
           Smartphone, Video, Users, HeartHandshake, Cpu, ChevronRight, Globe, 
           Settings, ShieldCheck, FileCheck, Facebook, ShoppingBag, Palette, 
           ClipboardCheck, Layout, Search, PieChart, Presentation, Headphones 
-        } = window.Lucide || {};
-
-        // If Lucide didn't load from a CDN, we'll use simple spans for now to ensure it loads
-        const Icon = ({ name: Component, ...props }) => {
-            return Component ? <Component {...props} /> : <span className="w-4 h-4 bg-white/10 rounded" />;
-        };
+        } = window.lucide;
 
         const App = () => {
-            const [activeTab, setActiveTab] = React.useState('home');
+          const [activeTab, setActiveTab] = React.useState('home');
 
-            const BentoCard = ({ children, className = "", title = "" }) => (
-                <div className={`relative group overflow-hidden rounded-3xl border border-white/10 bg-gradient-to-br from-white/5 to-white/[0.02] backdrop-blur-xl p-6 transition-all duration-500 hover:border-silver/40 hover:shadow-[0_0_30px_rgba(255,255,255,0.05)] ${className}`}>
-                    <div className="absolute inset-0 bg-gradient-to-br from-white/10 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-                    {title && <h3 className="text-[#c0c0c0]/50 uppercase tracking-[0.2em] text-[10px] font-bold mb-4">{title}</h3>}
-                    <div className="relative z-10">{children}</div>
-                </div>
-            );
+          const BentoCard = ({ children, className = "", title = "" }) => (
+            <div className={`relative group overflow-hidden rounded-3xl border border-white/10 bg-gradient-to-br from-white/5 to-white/[0.02] backdrop-blur-xl p-6 transition-all duration-500 hover:border-white/40 hover:shadow-[0_0_30px_rgba(255,255,255,0.05)] ${className}`}>
+              <div className="absolute inset-0 bg-gradient-to-br from-white/10 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+              {title && <h3 className="text-white/50 uppercase tracking-[0.2em] text-[10px] font-bold mb-4">{title}</h3>}
+              <div className="relative z-10">{children}</div>
+            </div>
+          );
 
-            return (
-                <div className="min-h-screen bg-[#050505] text-white selection:bg-white/30 font-sans overflow-x-hidden">
-                    <div className="fixed inset-0 pointer-events-none">
-                        <div className="absolute top-[-10%] left-[-10%] w-[40%] h-[40%] bg-blue-500/5 rounded-full blur-[120px]" />
-                        <div className="absolute bottom-[10%] right-[-5%] w-[30%] h-[30%] bg-purple-500/5 rounded-full blur-[120px]" />
+          return (
+            <div className="min-h-screen bg-[#050505] text-white selection:bg-white/30 selection:text-white font-sans overflow-x-hidden">
+              <div className="fixed inset-0 pointer-events-none">
+                <div className="absolute top-[-10%] left-[-10%] w-[40%] h-[40%] bg-blue-500/5 rounded-full blur-[120px]" />
+                <div className="absolute bottom-[10%] right-[-5%] w-[30%] h-[30%] bg-purple-500/5 rounded-full blur-[120px]" />
+              </div>
+
+              <nav className="fixed top-6 left-1/2 -translate-x-1/2 z-50 flex items-center gap-1 p-1.5 rounded-full bg-black/40 border border-white/10 backdrop-blur-md">
+                {['home', 'about', 'work', 'testimonials', 'contact'].map((tab) => (
+                  <button
+                    key={tab}
+                    onClick={() => {
+                      document.getElementById(tab)?.scrollIntoView({ behavior: 'smooth' });
+                      setActiveTab(tab);
+                    }}
+                    className={`px-5 py-2 rounded-full text-xs font-bold uppercase tracking-widest transition-all duration-300 ${
+                      activeTab === tab ? 'bg-white text-black' : 'text-white/60 hover:text-white'
+                    }`}
+                  >
+                    {tab}
+                  </button>
+                ))}
+              </nav>
+
+              <main className="max-w-7xl mx-auto px-6 pt-32 pb-24 space-y-6">
+                
+                <section id="home" className="grid grid-cols-1 md:grid-cols-12 gap-6 min-h-[70vh]">
+                  <BentoCard className="md:col-span-8 flex flex-col justify-center min-h-[400px]">
+                    <div className="space-y-6">
+                      <span className="inline-block px-4 py-1 rounded-full border border-white/10 text-[10px] tracking-[0.3em] uppercase bg-white/5 text-white/60">Available for Strategic Partnerships</span>
+                      <h1 className="text-5xl md:text-7xl font-black tracking-tight leading-[0.9]">
+                        HI! I AM <br/> 
+                        <span className="text-white">JOHN IÑIGO SR. MIRANDA</span>
+                      </h1>
+                      <div className="flex flex-wrap gap-4">
+                        <div className="flex items-center gap-2 px-3 py-1 bg-white/5 rounded-lg border border-white/5">
+                          <span className="w-1.5 h-1.5 rounded-full bg-green-500 animate-pulse" />
+                          <p className="text-sm font-medium">Digital Content Strategist & Talent Acquisition</p>
+                        </div>
+                      </div>
+                      <p className="text-xl text-white/60 max-w-xl font-light leading-relaxed">
+                        I help brands, teams, and businesses tell better stories, hire the right people, and build systems that actually work.
+                      </p>
                     </div>
+                  </BentoCard>
 
-                    <nav className="fixed top-6 left-1/2 -translate-x-1/2 z-50 flex items-center gap-1 p-1.5 rounded-full bg-black/40 border border-white/10 backdrop-blur-md">
-                        {['home', 'about', 'work', 'testimonials', 'contact'].map((tab) => (
-                            <button
-                                key={tab}
-                                onClick={() => {
-                                    document.getElementById(tab)?.scrollIntoView({ behavior: 'smooth' });
-                                    setActiveTab(tab);
-                                }}
-                                className={`px-5 py-2 rounded-full text-xs font-bold uppercase tracking-widest transition-all duration-300 ${
-                                    activeTab === tab ? 'bg-white text-black' : 'text-white/60 hover:text-white'
-                                }`}
-                            >
-                                {tab}
-                            </button>
+                  <BentoCard className="md:col-span-4 p-0 group overflow-hidden">
+                    <div className="relative h-full min-h-[400px] w-full">
+                      <div className="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent z-10" />
+                      <img 
+                        src="https://i.postimg.cc/cHBDY2xx/IMG-7442.jpg" 
+                        alt="John Iñigo Miranda"
+                        className="absolute inset-0 w-full h-full object-cover grayscale brightness-90 group-hover:grayscale-0 group-hover:scale-105 transition-all duration-700"
+                      />
+                      <div className="absolute bottom-8 left-8 z-20">
+                        <p className="text-xs tracking-widest uppercase opacity-50">Based in</p>
+                        <p className="text-lg font-bold">Philippines</p>
+                      </div>
+                    </div>
+                  </BentoCard>
+                </section>
+
+                <section id="about" className="grid grid-cols-1 md:grid-cols-12 gap-6">
+                  <BentoCard className="md:col-span-12 lg:col-span-4" title="Expertise">
+                    <div className="space-y-4">
+                      <div className="p-4 rounded-2xl bg-white/5 border border-white/10">
+                        <p className="text-2xl font-bold text-white">Magna Cum Laude</p>
+                        <p className="text-xs text-white/40 uppercase tracking-tighter">B.S. Psychology • National University</p>
+                      </div>
+                      <div className="grid grid-cols-2 gap-3">
+                        <div className="p-3 rounded-2xl bg-white/5 border border-white/10 flex flex-col justify-center items-center text-center">
+                          <span className="text-xs font-bold mb-1">CHRA</span>
+                          <span className="text-[10px] opacity-40 uppercase">Certified</span>
+                        </div>
+                        <div className="p-3 rounded-2xl bg-white/5 border border-white/10 flex flex-col justify-center items-center text-center">
+                          <span className="text-xs font-bold mb-1">RPm</span>
+                          <span className="text-[10px] opacity-40 uppercase">Licensed</span>
+                        </div>
+                      </div>
+                    </div>
+                  </BentoCard>
+
+                  <BentoCard className="md:col-span-12 lg:col-span-8" title="The Approach">
+                    <div className="space-y-6">
+                      <h2 className="text-3xl font-bold italic">“I’m a multipotentialite who thrives at the intersection of <span className="opacity-50">people, creativity, and systems</span>.”</h2>
+                      <p className="text-lg text-white/70 leading-relaxed font-light">
+                        I graduated Magna Cum Laude with a Bachelor’s Degree in Psychology from National University – Philippines. I am a Certified Human Resource Associate (CHRA) and a Registered Psychometrician (RPm).
+                      </p>
+                      <p className="text-lg text-white/70 leading-relaxed font-light">
+                        Outside of work, I create content and turn everyday moments into engaging stories.
+                      </p>
+                      <div className="flex gap-6 border-t border-white/10 pt-6">
+                        <div><p className="text-white font-bold">Storytelling</p><p className="text-sm text-white/40">Engagement driven</p></div>
+                        <div><p className="text-white font-bold">Recruitment</p><p className="text-sm text-white/40">Data & Experience</p></div>
+                        <div><p className="text-white font-bold">Efficiency</p><p className="text-sm text-white/40">Systematic workflows</p></div>
+                      </div>
+                    </div>
+                  </BentoCard>
+                </section>
+
+                <section id="work" className="space-y-6">
+                  <h2 className="text-4xl font-black uppercase tracking-tighter italic px-2">Professional Experience</h2>
+                  <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                    <BentoCard title="Digital Content Creation" className="flex flex-col h-full">
+                      <div className="space-y-4 mb-6">
+                        <div className="w-10 h-10 rounded-xl bg-white/5 flex items-center justify-center">
+                          <Video size={20} />
+                        </div>
+                        <p className="text-white/60 text-sm italic">Storytelling and trend adaptation.</p>
+                      </div>
+                      <ul className="space-y-3 flex-1">
+                        {["TikTok & YouTube montages", "Café reviews", "Canva social assets"].map((item, i) => (
+                          <li key={i} className="flex gap-3 text-xs text-white/80"><ChevronRight size={14} className="text-white/20" /><span>{item}</span></li>
                         ))}
-                    </nav>
+                      </ul>
+                    </BentoCard>
+                    <BentoCard title="Talent & HR" className="flex flex-col h-full">
+                      <div className="space-y-4 mb-6">
+                        <div className="w-10 h-10 rounded-xl bg-white/5 flex items-center justify-center">
+                          <Users size={20} />
+                        </div>
+                        <p className="text-white/60 text-sm italic">Candidate experience & data clarity.</p>
+                      </div>
+                      <ul className="space-y-3 flex-1">
+                        {["Technical interviews", "Recruitment dashboards", "Vendor decks"].map((item, i) => (
+                          <li key={i} className="flex gap-3 text-xs text-white/80"><ChevronRight size={14} className="text-white/20" /><span>{item}</span></li>
+                        ))}
+                      </ul>
+                    </BentoCard>
+                    <BentoCard title="Technical Support" className="flex flex-col h-full">
+                      <div className="space-y-4 mb-6">
+                        <div className="w-10 h-10 rounded-xl bg-white/5 flex items-center justify-center">
+                          <Headphones size={20} />
+                        </div>
+                        <p className="text-white/60 text-sm italic">Professionalism & rapid resolution.</p>
+                      </div>
+                      <ul className="space-y-3 flex-1">
+                        {["High-volume US Retail support", "Top Performer awards", "System documentation"].map((item, i) => (
+                          <li key={i} className="flex gap-3 text-xs text-white/80"><ChevronRight size={14} className="text-white/20" /><span>{item}</span></li>
+                        ))}
+                      </ul>
+                    </BentoCard>
+                  </div>
+                </section>
 
-                    <main className="max-w-7xl mx-auto px-6 pt-32 pb-24 space-y-6">
-                        <section id="home" className="grid grid-cols-1 md:grid-cols-12 gap-6 min-h-[70vh]">
-                            <BentoCard className="md:col-span-8 flex flex-col justify-center min-h-[400px]">
-                                <div className="space-y-6">
-                                    <span className="inline-block px-4 py-1 rounded-full border border-white/10 text-[10px] tracking-[0.3em] uppercase bg-white/5 text-[#c0c0c0]">Available for Strategic Partnerships</span>
-                                    <h1 className="text-5xl md:text-7xl font-black tracking-tight leading-[0.9] text-white">
-                                        HI! I AM <br/> 
-                                        <span className="opacity-60">JOHN IÑIGO SR. MIRANDA</span>
-                                    </h1>
-                                    <p className="text-xl text-white/60 max-w-xl font-light leading-relaxed">
-                                        I help brands, teams, and businesses tell better stories, hire the right people, and build systems that actually work.
-                                    </p>
-                                </div>
-                            </BentoCard>
-                            <BentoCard className="md:col-span-4 p-0 group overflow-hidden">
-                                <img src="https://i.postimg.cc/cHBDY2xx/IMG-7442.jpg" className="w-full h-full object-cover grayscale brightness-90 group-hover:grayscale-0 transition-all duration-700" />
-                            </BentoCard>
-                        </section>
+                <section id="testimonials" className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                  <BentoCard title="Feedback" className="md:col-span-2">
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                      <div className="space-y-4 italic text-white/80">
+                        <p>"John Iñigo is a dependable strategist who takes true ownership of complex processes..."</p>
+                        <p className="text-xs uppercase font-bold text-white/40">— Operations Lead</p>
+                      </div>
+                      <div className="space-y-4 italic text-white/80">
+                        <p>"A reliable team member who leads with passion and efficiency..."</p>
+                        <p className="text-xs uppercase font-bold text-white/40">— Unit Manager</p>
+                      </div>
+                    </div>
+                  </BentoCard>
+                </section>
 
-                        <section id="about" className="grid grid-cols-1 md:grid-cols-12 gap-6">
-                            <BentoCard className="md:col-span-4" title="Expertise">
-                                <div className="p-4 rounded-2xl bg-white/5 border border-white/10">
-                                    <p className="text-2xl font-bold text-white">Magna Cum Laude</p>
-                                    <p className="text-xs text-white/40 uppercase">B.S. Psychology • National University</p>
-                                </div>
-                            </BentoCard>
-                            <BentoCard className="md:col-span-8" title="The Approach">
-                                <h2 className="text-3xl font-bold italic">“I’m a multipotentialite who thrives at the intersection of people, creativity, and systems.”</h2>
-                                <p className="text-lg text-white/70 mt-4 font-light">I graduated Magna Cum Laude... Certified Human Resource Associate (CHRA) and a Registered Psychometrician (RPm).</p>
-                            </BentoCard>
-                        </section>
+                <section id="contact" className="grid grid-cols-1 md:grid-cols-12 gap-6">
+                  <BentoCard className="md:col-span-12 bg-white text-black p-12 text-center">
+                    <h2 className="text-5xl font-black uppercase">Let's Connect</h2>
+                    <p className="mt-4 font-bold">jimirandawork@gmail.com | +63 952-489-7616</p>
+                    <div className="flex justify-center gap-6 mt-8">
+                        <a href="https://www.linkedin.com/in/john-i%C3%B1igo-miranda-rpm-chra-55726520a/" target="_blank"><Linkedin size={24} /></a>
+                        <a href="https://www.instagram.com/inigsm/" target="_blank"><Instagram size={24} /></a>
+                    </div>
+                  </BentoCard>
+                </section>
+              </main>
 
-                        {/* Simplified for quick loading */}
-                        <section id="work">
-                           <h2 className="text-4xl font-black uppercase italic mb-6">Professional Experience</h2>
-                           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-                              <BentoCard title="Content Strategy"><p className="text-sm text-white/60">Storytelling, vlogs, and trend adaptation.</p></BentoCard>
-                              <BentoCard title="Talent & HR"><p className="text-sm text-white/60">Recruitment, dashboards, and candidate experience.</p></BentoCard>
-                              <BentoCard title="Tech Support"><p className="text-sm text-white/60">High-volume troubleshooting and resolution.</p></BentoCard>
-                           </div>
-                        </section>
-
-                        <section id="contact" className="grid grid-cols-1 md:grid-cols-12 gap-6">
-                            <BentoCard className="md:col-span-12 bg-white text-black p-12 text-center">
-                                <h2 className="text-5xl font-black uppercase">Let's Connect</h2>
-                                <p className="mt-4 font-bold">jimirandawork@gmail.com</p>
-                            </BentoCard>
-                        </section>
-                    </main>
-                </div>
-            );
+              <footer className="w-full py-12 flex justify-center opacity-10 uppercase italic font-black">
+                <h2 className="text-[15vw] select-none">MIRANDA</h2>
+              </footer>
+            </div>
+          );
         };
 
         const root = ReactDOM.createRoot(document.getElementById('root'));
